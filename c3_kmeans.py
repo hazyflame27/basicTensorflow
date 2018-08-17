@@ -19,7 +19,7 @@ original_label = np.asarray([0] * N + [1] * N + [2] * N).T
 
 # ham hien thi du lieu tren do thi
 def kmeans_display(X, label):
-    K = np.amax(label) + 1
+#     K = np.amax(label) + 1
     X0 = X[label == 0, :]
     X1 = X[label == 1, :]
     X2 = X[label == 2, :]
@@ -66,6 +66,8 @@ def has_converged(centers, new_centers):
 # thuat toan kmeans
 def kmeans(X, K):
     centers = [kmeans_init_centers(X, K)]
+    print('First centers:')
+    print(centers[-1])
     labels = []
     it = 0 
     while True:
@@ -79,7 +81,7 @@ def kmeans(X, K):
 
     
 (centers, labels, it) = kmeans(X, K)
-print('Centers found by our algorithm:')
+print('Centers found by algorithm:')
 print(centers[-1])
 
 kmeans_display(X, labels[-1])
