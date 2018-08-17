@@ -33,35 +33,37 @@ def kmeans_display(X, label):
     plt.show()
 
     
-# khoi tao cac gia tri ban dau
+# khoi tao cac gia tri ban dau, ngau nhien chon ra K diem lam center
 def kmeans_init_centers(X, k):
-    # randomly pick k rows of X as initial centers
     return X[np.random.choice(X.shape[0], k, replace=False)]
 
 
+# gan nhan cho cac diem la trung tam co khoang cach ngan nhat
 def kmeans_assign_labels(X, centers):
-    # calculate pairwise distances btw data and centers
+    # tinh khoang cach cua tat ca cac diem trong tap X voi tat ca cac center
     D = cdist(X, centers)
-    # return index of the closest center
+    # gan nhan la trung tam gan nhat
     return np.argmin(D, axis=1)
 
 
+# dua tren cac nhan vua duoc gan, cap nhat lai center moi cho k nhom
 def kmeans_update_centers(X, labels, K):
     centers = np.zeros((K, X.shape[1]))
     for k in range(K):
-        # collect all points assigned to the k-th cluster 
+        # lay tat ca cac diem thuoc tung nhom 
         Xk = X[labels == k, :]
-        # take average
+        # lay gia tri trung binh lam center
         centers[k, :] = np.mean(Xk, axis=0)
     return centers
 
 
+# kiem tra dieu kien dung, neu sau khi set lai center, tat ca cac diem khong thay doi center truoc khi set
 def has_converged(centers, new_centers):
-    # return True if two sets of centers are the same
     return (set([tuple(a) for a in centers]) == 
         set([tuple(a) for a in new_centers]))
 
     
+# thuat toan kmeans
 def kmeans(X, K):
     centers = [kmeans_init_centers(X, K)]
     labels = []
